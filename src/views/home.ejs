@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System</title>
+</head>
+
+<body>
+    <h1>Welcome to the Event Management System</h1>
+
+    <!-- Display a list of upcoming events -->
+    <h2>Upcoming Events</h2>
+    <ul>
+        <% for (let event of events) { %>
+            <li>
+                <%= event.name %> - <%= event.date %>
+            </li>
+            <% } %>
+    </ul>
+
+    <!-- Add more sections and content as needed -->
+</body>
+
+</html>

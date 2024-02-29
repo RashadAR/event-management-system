@@ -1,20 +1,18 @@
-// src/routes/index.js
 const express = require('express');
 const router = express.Router();
+const mysqlPool = require('../db');
 
-const pool = require('../server'); // Import the MySQL connection from server.js
-
-// Define routes
 router.get('/', async (req, res) => {
     try {
-        const [rows, fields] = await pool.query('SELECT * FROM events');
-        // Implement your home route with MySQL data
-        res.send('Hello, Event Management System with MySQL!');
+        // Fetch upcoming events from the database
+        const [events, fields] = await mysqlPool.query('SELECT * FROM events WHERE date > CURDATE()');
+
+        // Render the home view with the fetched events
+        res.render('home', { events });
     } catch (error) {
         console.error('Error fetching data from MySQL:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
-// Export router
 module.exports = router;
