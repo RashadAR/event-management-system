@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysqlPool = require('../db');
 
-router.get('/', async (req, res) => {
+router.get('/home', async (req, res) => {
     try {
         // Fetch upcoming events from the database
         const [events, fields] = await mysqlPool.query('SELECT * FROM events WHERE date > CURDATE()');
