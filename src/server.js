@@ -17,7 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 
 // Routes
-app.use('/', require('./routes/index'));
+app.use('/home', require('./routes/index'));
+app.get("/",(req,res)=> {
+    res.render("landing.ejs")
+})
 
 // Start server
 app.listen(PORT, () => {
