@@ -1,18 +1,26 @@
+// src/server.js
 const express = require('express');
-const router = express.Router();
-const mysqlPool = require('../db');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const mysql = require('mysql2/promise');
+const userRoutes = require('./userRoutes');
+const ticketRoutes = require('./ticketRoutes');
+const feedbackRoutes = require('./feedbackRoutes');
 
-router.get('/home', async (req, res) => {
-    try {
-        // Fetch upcoming events from the database
-        const [events, fields] = await mysqlPool.query('SELECT * FROM events WHERE date > CURDATE()');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-        // Render the home view with the fetched events
-        res.render('home', { events });
-    } catch (error) {
-        console.error('Error fetching data from MySQL:', error);
-        res.status(500).send('Internal Server Error');
-    }
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
+
+// Routes
+app.use('/users', userRoutes);
+app.use('/tickets', ticketRoutes);
+app.use('/feedback', feedbackRoutes);
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-module.exports = router;
