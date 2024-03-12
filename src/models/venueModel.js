@@ -1,14 +1,34 @@
 const db = require('../db');
 
 const createVenue = async (venueData) => {
-    // Implement logic to insert a new venue into the 'venues' table
-    // Example: await db.query('INSERT INTO venues (name, location) VALUES (?, ?)', [venueData.name, venueData.location]);
+    try {
+        // Assuming venueData contains the necessary information for the new venue
+        const { name, location } = venueData;
+
+        // Insert a new venue into the 'venues' table
+        await db.query('INSERT INTO venues (name, location) VALUES (?, ?)', [name, location]);
+
+        // You can return a success message or any relevant information
+        return { message: 'Venue created successfully' };
+    } catch (error) {
+        // Handle errors, log, or throw as needed
+        console.error('Error creating venue:', error);
+        throw error;
+    }
 };
 
 const getAllVenues = async () => {
-    // Implement logic to retrieve all venues from the 'venues' table
-    // Example: const [rows, fields] = await db.query('SELECT * FROM venues');
-    // Return the result
+    try {
+        // Retrieve all venues from the 'venues' table
+        const [rows] = await db.query('SELECT * FROM venues');
+
+        // Return the list of venues
+        return rows;
+    } catch (error) {
+        // Handle errors, log, or throw as needed
+        console.error('Error getting all venues:', error);
+        throw error;
+    }
 };
 
 module.exports = { createVenue, getAllVenues };

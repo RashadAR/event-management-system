@@ -4,8 +4,8 @@ const Ticket = {
     purchaseTicket: async (event_id, user_id, price) => {
         const connection = await mysql.createConnection({
             host: 'localhost',
-            user: 'your_username',
-            password: 'your_password',
+            user: 'root',
+            password: 'Mroot@123',
             database: 'event_management_db',
         });
 
@@ -23,8 +23,8 @@ const Ticket = {
     getTickets: async () => {
         const connection = await mysql.createConnection({
             host: 'localhost',
-            user: 'your_username',
-            password: 'your_password',
+            user: 'root',
+            password: 'Mroot@123',
             database: 'event_management_db',
         });
 

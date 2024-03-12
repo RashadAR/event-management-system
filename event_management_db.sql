@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE TABLE IF NOT EXISTS participants (
   user_id INT PRIMARY KEY,
   event_id INT,
+  name VARCHAR(255), -- Add this line for the 'name' column
+  email VARCHAR(255) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 );
@@ -65,17 +67,6 @@ CREATE TABLE IF NOT EXISTS tickets (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Table for feedback and ratings
-CREATE TABLE IF NOT EXISTS feedback (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  event_id INT,
-  user_id INT,
-  feedback_text TEXT,
-  rating INT CHECK (rating >= 1 AND rating <= 5),
-  feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
 
 
 -- Sample Data for Users
@@ -119,9 +110,3 @@ INSERT INTO tickets (event_id, user_id, price, payment_status, payment_date) VAL
 (1, 1, 20.00, 'completed', '2024-03-08 09:30:00'),
 (2, 2, 25.00, 'completed', '2024-03-12 11:45:00'),
 (3, 3, 30.00, 'pending', NULL);
-
--- Sample Data for Feedback and Ratings
-INSERT INTO feedback (event_id, user_id, feedback_text, rating, feedback_date) VALUES
-(1, 1, 'Great event!', 5, '2024-03-10 14:20:00'),
-(2, 2, 'Enjoyed it!', 4, '2024-03-16 16:05:00'),
-(3, 3, 'Looking forward to the next one.', 3, '2024-03-21 12:30:00');
